@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
+import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { submitForm} from "../actions";
-import connect from "react-redux/es/connect/connect";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 import { SchemaForm, utils } from 'react-schema-form';
+import RcSelect from "react-schema-form-rc-select";
+import Cookies from 'universal-cookie'
+
 import {forms} from '../data/Forms';
 
 const styles = theme => ({
@@ -27,104 +28,108 @@ const styles = theme => ({
     },
 });
 
-class Form extends Component {
+function Form(props) {
+    const [fetching, setFetching] = useState(false);
+    const [showErrors, setShowErrors]  = useState(false);
+    const [schema, setSchema] = useState(null);
+    const [form, setForm] = useState(null);
+    const [actions, setActions] = useState(null);
+    const [model, setModel] = useState({});
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            fetching: false,
-            error: null,
-            formId: null,
-            schema: null,
-            form: null,
-            actions: null,
-            model: {}
-        }
-    }
-
-    componentDidUpdate(nextProps, nextState, nextContext) {
-        if(this.state.formId !== nextProps.match.params.formId) {
-            let formData = forms[this.props.match.params.formId];
-            this.setState({
-                formId: nextProps.match.params.formId,
-                schema: formData.schema,
-                form: formData.form,
-                actions: formData.actions,
-                model: formData.model || {}
-            });
-        }
-    }
-
-    componentDidMount() {
-        let formData = forms[this.props.match.params.formId];
-        this.setState({
-            formId: this.props.match.params.formId,
-            schema: formData.schema,
-            form: formData.form,
-            actions: formData.actions,
-            model: formData.model || {}
-        });
-    }
-
-    onModelChange = (key, val) => {
-        //console.log(this.state.model);
-        utils.selectOrSet(key, this.state.model, val);
+    const mapper = {
+        "rc-select": RcSelect
     };
 
-    onButtonClick(action) {
-        console.log(action, this.state.model);
-        let validationResult = utils.validateBySchema(this.state.schema, this.state.model);
+    const { classes } = props;
+
+    useEffect(() => {
+        console.log(props.match.params.formId);
+        let formData = forms[props.match.params.formId];
+        console.log("formData = ", formData);
+        setSchema(formData.schema);
+        setForm(formData.form);
+        setActions(formData.actions);
+        console.log("state = ", props.location.state);
+        // must ensure that the model is an empty object to the cascade dropdown
+        setModel(props.location.state ? props.location.state.data || {} : formData.model || {});
+    }, [props.match.params.formId, props.location.state])
+
+    const onModelChange = (key, val, type) => {
+        utils.selectOrSet(key, model, val, type);
+        setModel({...model});  // here we must create a new object to force re-render.
+    };
+
+    function onButtonClick(action) {
+        console.log("onButtonClick is called", action);
+        let validationResult = utils.validateBySchema(schema, model);
+        console.log(validationResult);
         if(!validationResult.valid) {
-            this.setState({error: validationResult.error.message});
+            setShowErrors(true);
         } else {
-            action.data = this.state.model;
-            this.setState({success: action.success, fetching: true});
-            this.props.submitForm(action);
+            console.log("model = ", model);
+            // submit the form to the portal service.
+            action.data = model;
+            // use the path defined in the action, default to /portal/command.
+            const url = action.path ? action.path : '/portal/command';
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+            submitForm(url, headers, action);
         }
+    };
+
+    const submitForm = async (url, headers, action) => {
+      setFetching(true);
+      try {
+        const cookies = new Cookies();
+        Object.assign(headers, {'X-CSRF-TOKEN': cookies.get('csrf')})
+        const response = await fetch(url, { method: action.method ? action.method : 'POST', body: action.rest ? JSON.stringify(action.data) : JSON.stringify(action), headers, credentials: 'include'});
+        // we have tried out best to response json from our APIs; however, some services return text instead like light-oauth2.
+        const s = await response.text();
+        console.log("submit error", s);
+        const data = JSON.parse(s);
+        setFetching(false);
+        if (!response.ok) {
+            // code is not OK.
+            props.history.push({pathname: action.failure, state: { error: data }});  
+        } else {
+            props.history.push({pathname: action.success, state: { data }});
+        }
+      } catch (e) {
+        // network error here.
+        console.log(e);
+        // convert it to json as the failure component can only deal with JSON.
+        const error = { error: e };
+        props.history.push({pathname: action.failure, state: { error }});
+      }
+    };
+
+    if(schema) {
+        var buttons = [];
+        actions.map((item, index) => {
+            buttons.push(<Button variant="contained" className={classes.button} color="primary" key={index} onClick={e => onButtonClick(item)}>{item.title}</Button>)
+            return buttons;
+        });
+
+        let wait;
+        if(fetching) {
+            wait = <div><CircularProgress className={classes.progress} /></div>;
+        } else {
+            wait = <div></div>;
+        }
+        let title = <h2>{schema.title}</h2>
+        return (
+            <div>
+                {wait}
+                {title}
+                <SchemaForm schema={schema} form={form} model={model} mapper={mapper} showErrors={showErrors} onModelChange={onModelChange} />
+                {buttons}
+            </div>
+        )
+    } else {
+        return (<CircularProgress className={classes.progress} />);
     }
 
-    render() {
-        const { classes } = this.props;
-        //console.log(this.state.actions);
-        if(this.state.schema) {
-            var actions = [];
-            this.state.actions.map((item, index) => {
-                let boundButtonClick = this.onButtonClick.bind(this, item);
-                actions.push(<Button variant="contained" className={classes.button} color="primary" key={index} onClick={boundButtonClick}>{item.title}</Button>)
-            });
-            let wait;
-            if(this.state.fetching) {
-                //console.log('fetching is true');
-                wait = <div><CircularProgress className={classes.progress} /></div>;
-            } else {
-                //console.log("fetching is false");
-                wait = <div></div>;
-            }
-            let title = <h2>{this.state.schema.title}</h2>
-
-            return (
-                <div>
-                    {wait}
-                    {title}
-                    <SchemaForm schema={this.state.schema} form={this.state.form} model={this.state.model} onModelChange={this.onModelChange} />
-                    <pre>{this.state.error}</pre>
-                    {actions}
-                </div>
-            )
-        } else {
-            return (<CircularProgress className={classes.progress} />);
-        }
-    }
 }
 
-const mapStateToProps = state => ({
-});
-
-const mapDispatchToProps = dispatch => ({
-    submitForm: action => dispatch(submitForm(action))
-});
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withStyles(styles)(Form));
+export default withStyles(styles)(Form);

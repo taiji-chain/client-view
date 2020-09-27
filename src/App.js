@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Switch, Route} from 'react-router-dom';
-import { Router } from 'react-router';
+import { BrowserRouter, Switch, Route} from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import Home from './components/Home';
 import Wallet from './components/Wallet';
@@ -105,7 +104,7 @@ class App extends Component {
 
     render() {
         return (
-            <Router history={history}>
+            <BrowserRouter>
                 <ResponsiveDrawer>
                     <Switch>
                         <Route exact path="/" component={Home} />
@@ -127,7 +126,7 @@ class App extends Component {
                         <Route path="/kycEvent" component={KycEvent} />
                     </Switch>
                 </ResponsiveDrawer>
-            </Router>
+            </BrowserRouter>
         );
     }
 }

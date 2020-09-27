@@ -115,11 +115,6 @@ class ResponsiveDrawer extends Component {
                     <MenuItem component={Link} to="/form/kycEventForm" selected={'/form/kycEventForm' === pathname}>
                         KYC Event
                     </MenuItem>
-                    <Divider />
-                    <MenuItem component={Link} to="/form/covidQueryForm" selected={'/form/covidQueryForm' === pathname}>
-                        COVID-19 Map
-                    </MenuItem>
-
                 </MenuList>
             </div>
         );
