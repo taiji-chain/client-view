@@ -70,7 +70,7 @@ function Form(props) {
             // submit the form to the portal service.
             action.data = model;
             // use the path defined in the action, default to /portal/command.
-            const url = action.path ? action.path : '/portal/command';
+            const url = action.path ? action.path : '/api/webclient';
             const headers = {
                 'Content-Type': 'application/json'
             };
