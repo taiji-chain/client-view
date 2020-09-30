@@ -1,5 +1,4 @@
-import React, {Component, Fragment} from 'react';
-import {connect} from 'react-redux';
+import React, { Fragment } from 'react';
 import Paper from "@material-ui/core/Paper/Paper";
 import Table from "@material-ui/core/Table/Table";
 import TableHead from "@material-ui/core/TableHead/TableHead";
@@ -20,64 +19,50 @@ const styles = theme => ({
     },
 });
 
-class CurrencyTransaction extends Component {
-
-    render() {
-        const { classes } = this.props;
-        console.log(this.props.form.result);
-        let result;
-        if(this.props.form.result) {
-            result = (
-                <Paper className={classes.root}>
-                    <Table className={classes.table}>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell numeric>TxId</TableCell>
-                                <TableCell>Time</TableCell>
-                                <TableCell>ToAddress</TableCell>
-                                <TableCell numeric>Amount in SHELL</TableCell>
-                                <TableCell>Data</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this.props.form.result.map(row => {
-                                return (
-                                    <TableRow key={row.id}>
-                                        <TableCell component="th" scope="row">
-                                            {row.id}
-                                        </TableCell>
-                                        <TableCell>{moment.utc(row.time).format()}</TableCell>
-                                        <TableCell>{row.toAddress}</TableCell>
-                                        <TableCell numeric>{this.props.address === row.toAddress? '+' + row.value : '-' + row.value}</TableCell>
-                                        <TableCell>{row.data}</TableCell>
-                                    </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </Table>
-                </Paper>
-            )
-        } else {
-            if(this.props.error) {
-                console.log('error is not empty');
-                result = <div>Error: {this.props.form.error}</div>
-            } else {
-                result = ''
-            }
-        }
-        return (
-            <Fragment>
-                {result}
-            </Fragment>
+function CurrencyTransaction(props) {
+	console.log("props = ", props);
+	console.log("data = ", props.location.state.data);
+    const { classes } = props;
+    const data = props.location.state.data;
+    const model = props.location.state.model;
+    let result;
+    if(data) {
+        result = (
+            <Paper className={classes.root}>
+                <Table className={classes.table}>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell numeric>TxId</TableCell>
+                            <TableCell>Time</TableCell>
+                            <TableCell>ToAddress</TableCell>
+                            <TableCell numeric>Amount in SHELL</TableCell>
+                            <TableCell>Data</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {data.map(row => {
+                            return (
+                                <TableRow key={row.id}>
+                                    <TableCell component="th" scope="row">
+                                        {row.id}
+                                    </TableCell>
+                                    <TableCell>{moment.utc(row.time).format()}</TableCell>
+                                    <TableCell>{row.toAddress}</TableCell>
+                                    <TableCell numeric>{model.address === row.toAddress? '+' + row.value : '-' + row.value}</TableCell>
+                                    <TableCell>{row.data}</TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+            </Paper>
         )
-    }
+    } 
+    return (
+        <Fragment>
+            {result}
+        </Fragment>
+    )
 }
 
-const mapStateToProps = state => ({
-    form: state.form
-});
-
-
-export default connect(
-    mapStateToProps
-)(withStyles(styles)(CurrencyTransaction));
+export default withStyles(styles)(CurrencyTransaction);

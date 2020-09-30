@@ -8,7 +8,8 @@ export const forms = {
                 action: 'balance',
                 version: '1.0.0',
                 title: 'Balance',
-                success: '/currencyBalance'
+                success: '/currencyBalance',
+                failure: '/failure'
             }
         ],
         schema: {
@@ -37,7 +38,8 @@ export const forms = {
                 action: 'transaction',
                 version: '1.0.0',
                 title: 'Transaction',
-                success: '/currencyTransaction'
+                success: '/currencyTransaction',
+                failure: '/failure'
             }
         ],
         schema: {
@@ -72,7 +74,8 @@ export const forms = {
                 action: 'send',
                 version: '1.0.0',
                 title: 'Send',
-                success: '/currencySent'
+                success: '/success',
+                failure: '/failure'
             }
         ],
         schema: {
@@ -136,7 +139,8 @@ export const forms = {
                 action: 'create',
                 version: '1.0.0',
                 title: 'Wallet',
-                success: '/wallet'
+                success: '/success',
+                failure: '/failure'
             }
         ],
         schema: {
@@ -209,7 +213,8 @@ export const forms = {
                 action: 'create',
                 version: '1.0.0',
                 title: 'Create',
-                success: '/tokenCreated'
+                success: '/success',
+                failure: '/failure'
             }
         ],
         schema: {
@@ -253,7 +258,12 @@ export const forms = {
                 decimals: {
                     title: 'Decimals',
                     type: 'string'
+                },
+                description: {
+                    title: 'Description',
+                    type: 'string'
                 }
+
             }
         },
         form: [
@@ -272,7 +282,13 @@ export const forms = {
             'name',
             'symbol',
             'totalSupply',
-            'decimals'
+            'decimals',
+            {
+                key: 'description',
+                type: 'textarea',
+                placeholder: "Write down the purpose or usage of the token",
+                rows: 5
+            }
         ]
     },
     tokenTransferForm: {
@@ -317,6 +333,10 @@ export const forms = {
                 amount: {
                     title: 'Amount',
                     type: 'string'
+                },
+                comment: {
+                    title: 'Comment',
+                    type: 'string'
                 }
             }
         },
@@ -328,7 +348,13 @@ export const forms = {
             },
             'tokenAddressOrSymbol',
             'toAddress',
-            'amount'
+            'amount',
+            {
+                key: 'comment',
+                type: 'textarea',
+                placeholder: "Comment on the token transaction",
+                rows: 5
+            }
         ]
     },
     tokenApproveForm: {
@@ -373,6 +399,10 @@ export const forms = {
                 amount: {
                     title: 'Amount',
                     type: 'string'
+                },
+                comment: {
+                    title: 'Comment',
+                    type: 'string'
                 }
             }
         },
@@ -384,7 +414,13 @@ export const forms = {
             },
             "tokenAddressOrSymbol",
             "toAddress",
-            "amount"
+            "amount",
+            {
+                key: 'comment',
+                type: 'textarea',
+                placeholder: "Comment on the token transaction",
+                rows: 5
+            }
         ]
     },
     tokenWithdrawForm: {
@@ -429,6 +465,10 @@ export const forms = {
                 amount: {
                     title: 'Amount',
                     type: 'string'
+                },
+                comment: {
+                    title: 'Comment',
+                    type: 'string'
                 }
             }
         },
@@ -440,7 +480,13 @@ export const forms = {
             },
             'tokenAddressOrSymbol',
             'fromAddress',
-            'amount'
+            'amount',
+            {
+                key: 'comment',
+                type: 'textarea',
+                placeholder: "Comment on the token transaction",
+                rows: 5
+            }
         ]
     },
     tokenInfoForm: {

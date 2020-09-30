@@ -2,11 +2,8 @@ import React, {Component} from 'react';
 import { BrowserRouter, Switch, Route} from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import Home from './components/Home';
-import Wallet from './components/Wallet';
 import CurrencyBalance from './components/CurrencyBalance';
-import CurrencySent from './components/CurrencySent';
 import CurrencyTransaction from './components/CurrencyTransaction';
-import TokenCreated from './components/TokenCreated';
 import TokenApproved from './components/TokenApproved';
 import TokenTransferred from './components/TokenTransferred';
 import TokenWithdrawn from './components/TokenWithdrawn';
@@ -17,6 +14,8 @@ import KycCreated from './components/KycCreated';
 import KycUpdated from './components/KycUpdated';
 import KycInfo from './components/KycInfo';
 import KycEvent from './components/KycEvent';
+import Success from './components/Success';
+import Failure from './components/Failure';
 import ResponsiveDrawer from './components/ResponsiveDrawer';
 import Form from './components/Form';
 
@@ -110,10 +109,7 @@ class App extends Component {
                         <Route exact path="/" component={Home} />
                         <Route path="/form/:formId" component={Form} />
                         <Route path="/currencyBalance" component={CurrencyBalance} />
-                        <Route path="/wallet" component={Wallet} />
-                        <Route path="/currencySent" component={CurrencySent} />
                         <Route path="/currencyTransaction" component={CurrencyTransaction} />
-                        <Route path="/tokenCreated" component={TokenCreated} />
                         <Route path="/tokenApproved" component={TokenApproved} />
                         <Route path="/tokenWithdrawn" component={TokenWithdrawn} />
                         <Route path="/tokenTransferred" component={TokenTransferred} />
@@ -124,6 +120,8 @@ class App extends Component {
                         <Route path="/kycUpdated" component={KycUpdated} />
                         <Route path="/kycInfo" component={KycInfo} />
                         <Route path="/kycEvent" component={KycEvent} />
+                        <Route path="/success" component={Success} />
+                        <Route path="/failure" component={Failure} />
                     </Switch>
                 </ResponsiveDrawer>
             </BrowserRouter>

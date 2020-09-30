@@ -93,7 +93,7 @@ function Form(props) {
             // code is not OK.
             props.history.push({pathname: action.failure, state: { error: data }});  
         } else {
-            props.history.push({pathname: action.success, state: { data }});
+            props.history.push({pathname: action.success, state: { data, model }});
         }
       } catch (e) {
         // network error here.
