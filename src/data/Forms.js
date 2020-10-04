@@ -46,7 +46,9 @@ export const forms = {
             type: 'object',
             required: [
                 'address',
-                'currency'
+                'currency',
+                'pageNumber',
+                'pageSize'
             ],
             title: 'Currency Transaction',
             properties: {
@@ -58,6 +60,16 @@ export const forms = {
                     title: 'Currency',
                     type: 'string',
                     enum: ['taiji']
+                },
+                pageNumber: {
+                    title: 'Page Number',
+                    type: 'integer',
+                    default: 1
+                },
+                pageSize: {
+                    title: 'Page Size',
+                    type: 'integer',
+                    default: 10
                 }
             }
         },

@@ -28,13 +28,18 @@ function CurrencyTransaction(props) {
     let result;
     if(data) {
         result = (
+            <>
+            Query Address: {model.address} Currency: {model.currency}
             <Paper className={classes.root}>
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
+                            <TableCell numeric>No</TableCell>
                             <TableCell numeric>TxId</TableCell>
                             <TableCell>Time</TableCell>
-                            <TableCell>ToAddress</TableCell>
+                            <TableCell>From Address</TableCell>
+                            <TableCell>To Address</TableCell>
+                            <TableCell>Transaction</TableCell>
                             <TableCell numeric>Amount in SHELL</TableCell>
                             <TableCell>Data</TableCell>
                         </TableRow>
@@ -44,18 +49,24 @@ function CurrencyTransaction(props) {
                             return (
                                 <TableRow key={row.id}>
                                     <TableCell component="th" scope="row">
+                                        {row.no}
+                                    </TableCell>
+                                    <TableCell component="th" scope="row">
                                         {row.id}
                                     </TableCell>
-                                    <TableCell>{moment.utc(row.time).format()}</TableCell>
-                                    <TableCell>{row.toAddress}</TableCell>
-                                    <TableCell numeric>{model.address === row.toAddress? '+' + row.value : '-' + row.value}</TableCell>
-                                    <TableCell>{row.data}</TableCell>
+                                    <TableCell>{moment.utc(row.ts).format()}</TableCell>
+                                    <TableCell>{row.fr}</TableCell>
+                                    <TableCell>{row.to}</TableCell>
+                                    <TableCell>{row.ty}</TableCell>
+                                    <TableCell numeric>{row.va}</TableCell>
+                                    <TableCell>{row.da}</TableCell>
                                 </TableRow>
                             );
                         })}
                     </TableBody>
                 </Table>
             </Paper>
+            </>
         )
     } 
     return (
