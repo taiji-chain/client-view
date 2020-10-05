@@ -4,12 +4,6 @@ import { createBrowserHistory } from 'history';
 import Home from './components/Home';
 import CurrencyBalance from './components/CurrencyBalance';
 import CurrencyTransaction from './components/CurrencyTransaction';
-import TokenApproved from './components/TokenApproved';
-import TokenTransferred from './components/TokenTransferred';
-import TokenWithdrawn from './components/TokenWithdrawn';
-import TokenInfo from './components/TokenInfo';
-import TokenAccount from './components/TokenAccount';
-import TokenTransaction from './components/TokenTransaction';
 import KycCreated from './components/KycCreated';
 import KycUpdated from './components/KycUpdated';
 import KycInfo from './components/KycInfo';
@@ -110,12 +104,6 @@ class App extends Component {
                         <Route path="/form/:formId" component={Form} />
                         <Route path="/currencyBalance" component={CurrencyBalance} />
                         <Route path="/currencyTransaction" component={CurrencyTransaction} />
-                        <Route path="/tokenApproved" component={TokenApproved} />
-                        <Route path="/tokenWithdrawn" component={TokenWithdrawn} />
-                        <Route path="/tokenTransferred" component={TokenTransferred} />
-                        <Route path="/tokenInfo" component={TokenInfo} />
-                        <Route path="/tokenAccount" component={TokenAccount} />
-                        <Route path="/tokenTransaction" component={TokenTransaction} />
                         <Route path="/kycCreated" component={KycCreated} />
                         <Route path="/kycUpdated" component={KycUpdated} />
                         <Route path="/kycInfo" component={KycInfo} />

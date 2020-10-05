@@ -34,13 +34,13 @@ function CurrencyTransaction(props) {
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
-                            <TableCell numeric>No</TableCell>
-                            <TableCell numeric>TxId</TableCell>
+                            <TableCell>No</TableCell>
+                            <TableCell>TxId</TableCell>
                             <TableCell>Time</TableCell>
                             <TableCell>From Address</TableCell>
                             <TableCell>To Address</TableCell>
                             <TableCell>Transaction</TableCell>
-                            <TableCell numeric>Amount in SHELL</TableCell>
+                            <TableCell>Amount in SHELL</TableCell>
                             <TableCell>Data</TableCell>
                         </TableRow>
                     </TableHead>
@@ -58,7 +58,7 @@ function CurrencyTransaction(props) {
                                     <TableCell>{row.fr}</TableCell>
                                     <TableCell>{row.to}</TableCell>
                                     <TableCell>{row.ty}</TableCell>
-                                    <TableCell numeric>{row.va}</TableCell>
+                                    <TableCell>{row.va}</TableCell>
                                     <TableCell>{row.da}</TableCell>
                                 </TableRow>
                             );

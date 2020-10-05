@@ -312,7 +312,8 @@ export const forms = {
                 action: 'transfer',
                 version: '1.0.0',
                 title: 'Transfer',
-                success: '/tokenTransferred'
+                success: '/success',
+                failure: '/failure'
             }
         ],
         schema: {
@@ -378,7 +379,8 @@ export const forms = {
                 action: 'approve',
                 version: '1.0.0',
                 title: 'Approve',
-                success: '/tokenApproved'
+                success: '/success',
+                failure: '/failure'
             }
         ],
         schema: {
@@ -444,7 +446,8 @@ export const forms = {
                 action: 'withdraw',
                 version: '1.0.0',
                 title: 'Withdraw',
-                success: '/tokenWithdrawn'
+                success: '/success',
+                failure: '/failure'
             }
         ],
         schema: {
@@ -510,7 +513,8 @@ export const forms = {
                 action: 'info',
                 version: '1.0.0',
                 title: 'Info',
-                success: '/tokenInfo'
+                success: '/success',
+                failure: '/failure'
             }
         ],
         schema: {
@@ -536,7 +540,8 @@ export const forms = {
                 action: 'account',
                 version: '1.0.0',
                 title: 'Account',
-                success: '/tokenAccount'
+                success: '/success',
+                failure: '/failure'
             }
         ],
         schema: {
@@ -569,7 +574,8 @@ export const forms = {
                 action: 'transaction',
                 version: '1.0.0',
                 title: 'Transaction',
-                success: '/tokenTransaction'
+                success: '/success',
+                failure: '/failure'
             }
         ],
         schema: {
