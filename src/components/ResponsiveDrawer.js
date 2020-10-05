@@ -106,6 +106,7 @@ class ResponsiveDrawer extends Component {
                         Token Transaction
                     </MenuItem>
                     <Divider />
+                    {/*
                     <MenuItem component={Link} to="/form/kycCreateForm" selected={'/form/kycCreateForm' === pathname}>
                         Create KYC
                     </MenuItem>
@@ -115,6 +116,7 @@ class ResponsiveDrawer extends Component {
                     <MenuItem component={Link} to="/form/kycEventForm" selected={'/form/kycEventForm' === pathname}>
                         KYC Event
                     </MenuItem>
+                    */}
                 </MenuList>
             </div>
         );
