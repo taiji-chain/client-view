@@ -2,8 +2,12 @@
 echo "Build the view"
 yarn build
 echo "Build completed in build folder, start copying to local server"
+# local
 rm -rf ~/light-chain/light-docker/local/web-client/build
 cp -r ./build ~/light-chain/light-docker/local/web-client
-# ssh test2 "rm -rf ~/light-chain/light-config-test/test2/maproot/build"
-# scp -r ./build test2:/home/steve/light-chain/light-config-test/test2/maproot
+# test
+ssh test3 "rm -rf ~/light-chain/light-docker/test3/web-client/build"
+scp -r ./build test3:/home/steve/light-chain/light-docker/test3/web-client
+# prod
+
 echo "Copied!"
