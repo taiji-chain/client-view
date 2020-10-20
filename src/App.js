@@ -12,6 +12,7 @@ import Success from './components/Success';
 import Failure from './components/Failure';
 import ResponsiveDrawer from './components/ResponsiveDrawer';
 import Form from './components/Form';
+import PrivacyPolicy from './components/PrivacyPolicy';
 
 export const history = createBrowserHistory();
 
@@ -110,6 +111,7 @@ class App extends Component {
                         <Route path="/kycEvent" component={KycEvent} />
                         <Route path="/success" component={Success} />
                         <Route path="/failure" component={Failure} />
+                        <Route path="/privacy" component={PrivacyPolicy} />
                     </Switch>
                 </ResponsiveDrawer>
             </BrowserRouter>
